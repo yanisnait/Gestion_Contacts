@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 25 April 2011 7:52:33 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="domain">
+
+	<class name="Contact" table="contact" discriminator-value="contact">
+
+		<cache usage="read-write"/>
+
+		<id name="id" type="long"> <column name="ID" />
+			<generator class="increment"></generator>
+		</id>
+		
+		<property name="firstName" type="string">
+			<column name="FIRSTNAME" not-null="true" />
+		</property>
+		<property name="lastName" type="string">
+			<column name="LASTNAME" not-null="true" />
+		</property>
+		<property name="email" type="string">
+			<column name="EMAIL" not-null="true" />
+		</property>
+		
+
+		<many-to-one name="address" column="ADDRESS" cascade="all" unique="true"/>
+
+		<set name="phones" cascade="persist all-delete-orphan" lazy="true">
+			<cache usage="read-write"/>
+
+			<key column="ID_CONTACT"/>
+			<one-to-many class="PhoneNumber"/>
+		</set>
+
+		<!-- ContactGroup est le possédant de l'association. Pour sauvegarder, mettre à jour, ou supprimer
+		il faut passer par le contactGroup -->
+		
+		<set name="books" table="CONTACTINGROUP" inverse="true" lazy="true" cascade="persist">
+			<cache usage="read-write"/>
+
+			<key column="ID_CONTACT"/>
+			<many-to-many class="ContactGroup" column="ID_GROUP"/>
+		</set>
+
+		<subclass name="Entreprise" discriminator-value="entreprise">
+			<property name="numSiret" type="long" column="NUM_SIRET"/>
+		</subclass>
+	</class>
+</hibernate-mapping>
+

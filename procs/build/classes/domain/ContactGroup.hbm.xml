@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+		"-//Hibernate/Hibernate Mapping DTD//EN"
+		"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="domain">
+	<class name="ContactGroup" table="CONTACTGROUP">
+
+		<meta attribute="class-description">
+			This class contains all ContactGroup informations.
+		</meta>
+
+		<cache usage="read-write"/>
+
+		<id name="groupId" type="long" column="ID">
+			<generator class="increment"/>
+		</id>
+
+		<property name="groupName" column="GROUPNAME" type="string"/>
+		
+		<set name="contacts" table="CONTACTINGROUP" lazy="true" cascade="persist">
+			<cache usage="read-write"/>
+
+			<key column="ID_GROUP"/>
+			<many-to-many class="Contact" column="ID_CONTACT"/>
+		</set>
+	</class>
+</hibernate-mapping>

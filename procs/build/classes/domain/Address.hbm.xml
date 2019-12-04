@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="domain">
+    <class name="Address" table="ADDRESS">
+
+        <meta attribute="class-description">
+            This class contains all Address informations.
+        </meta>
+
+        <cache usage="read-write"/>
+
+        <id name="id" type="long" column="ID">
+            <generator class="increment"/>
+        </id>
+
+        <property name="country" column="COUNTRY" type="string"/>
+        <property name="city" column="CITY" type="string"/>
+        <property name="street" column="STREET" type="string"/>
+        <property name="zip" column="ZIP" type="string"/>
+
+    </class>
+</hibernate-mapping>
